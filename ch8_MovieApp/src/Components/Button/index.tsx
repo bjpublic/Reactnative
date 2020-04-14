@@ -20,7 +20,7 @@ interface Props {
   onPress?: () => void;
 }
 
-const Button = ({ label, style, onPress }: Props) => {
+const Button = ({label, style, onPress}: Props) => {
   return (
     <StyleButton style={style} onPress={onPress}>
       <Label>{label}</Label>

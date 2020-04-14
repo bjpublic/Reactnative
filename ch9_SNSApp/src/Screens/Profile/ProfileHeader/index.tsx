@@ -39,14 +39,11 @@ interface Props {
   following: number;
 }
 
-const ProfileHeader = ({ image, posts, follower, following }: Props) => {
+const ProfileHeader = ({image, posts, follower, following}: Props) => {
   return (
     <Container>
       <ProfileImageContainer>
-        <ProfileImage
-          source={{ uri: image }}
-          style={{ width: 100, height: 100 }}
-        />
+        <ProfileImage source={{uri: image}} style={{width: 100, height: 100}} />
       </ProfileImageContainer>
       <ProfileContent>
         <LabelContainer>

@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { NavigationScreenProp, NavigationState } from 'react-navigation';
-
+import React, {useState} from 'react';
+import {StackNavigationProp} from '@react-navigation/stack';
 import Styled from 'styled-components/native';
 
 import Input from '~/Components/Input';
@@ -42,11 +41,12 @@ const GoBack = Styled.Text`
   color: #3796EF;
 `;
 
+type NavigationProp = StackNavigationProp<LoginNaviParamList, 'Signup'>;
 interface Props {
-  navigation: NavigationScreenProp<NavigationState>;
+  navigation: NavigationProp;
 }
 
-const Signup = ({ navigation }: Props) => {
+const Signup = ({navigation}: Props) => {
   const [tabIndex, setTabIndex] = useState<number>(0);
   const tabs = ['전화번호', '이메일'];
 
@@ -64,10 +64,10 @@ const Signup = ({ navigation }: Props) => {
           ))}
         </TabContainer>
         <Input
-          style={{ marginBottom: 16 }}
+          style={{marginBottom: 16}}
           placeholder={tabIndex === 0 ? '전화번호' : '이메일'}
         />
-        <Button label="다음" style={{ marginBottom: 24 }} />
+        <Button label="다음" style={{marginBottom: 24}} />
         {tabIndex === 0 && (
           <Description>
             SNS App의 업데이트 내용을 SMS로 수신할 수 있으며, 언제든지 수신을
@@ -83,10 +83,6 @@ const Signup = ({ navigation }: Props) => {
       </Footer>
     </Container>
   );
-};
-
-Signup.navigationOptions = {
-  header: null,
 };
 
 export default Signup;

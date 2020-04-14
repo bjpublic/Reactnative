@@ -1,7 +1,9 @@
-import React from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
-import { NavigationScreenProp, NavigationState } from 'react-navigation';
+import React, {useContext, useEffect} from 'react';
 import Styled from 'styled-components/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import SplashScreen from 'react-native-splash-screen';
+
+import {UserContext} from '~/Context/User';
 
 import Input from '~/Components/Input';
 import Button from '~/Components/Button';
@@ -52,18 +54,25 @@ const Copyright = Styled.Text`
   text-align: center;
 `;
 
+type NavigationProp = StackNavigationProp<LoginNaviParamList, 'Login'>;
 interface Props {
-  navigation: NavigationScreenProp<NavigationState>;
+  navigation: NavigationProp;
 }
 
-const Login = ({ navigation }: Props) => {
+const Login = ({navigation}: Props) => {
+  const {login} = useContext<IUserContext>(UserContext);
+
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
   return (
     <Container>
       <FormContainer>
         <Logo>SNS App</Logo>
-        <Input style={{ marginBottom: 16 }} placeholder="이메일" />
+        <Input style={{marginBottom: 16}} placeholder="이메일" />
         <Input
-          style={{ marginBottom: 16 }}
+          style={{marginBottom: 16}}
           placeholder="비밀번호"
           secureTextEntry={true}
         />
@@ -72,10 +81,9 @@ const Login = ({ navigation }: Props) => {
         </PasswordReset>
         <Button
           label="로그인"
-          style={{ marginBottom: 24 }}
+          style={{marginBottom: 24}}
           onPress={() => {
-            AsyncStorage.setItem('key', 'JWT_KEY');
-            navigation.navigate('MainNavigator');
+            login('dev.yakuza@gmail.com', 'password');
           }}
         />
         <SignupText>
@@ -90,10 +98,6 @@ const Login = ({ navigation }: Props) => {
       </Footer>
     </Container>
   );
-};
-
-Login.navigationOptions = {
-  header: null,
 };
 
 export default Login;

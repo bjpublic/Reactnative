@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { FlatList } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {FlatList} from 'react-native';
 
 import Styled from 'styled-components/native';
 
@@ -31,17 +31,17 @@ interface Props {
   onPress: (id: number) => void;
 }
 
-const SubCatalogList = ({ title, url, onPress }: Props) => {
+const SubCatalogList = ({title, url, onPress}: Props) => {
   const [data, setData] = useState<Array<IMovie>>([]);
 
   useEffect(() => {
     fetch(url)
-      .then(response => response.json())
-      .then(json => {
+      .then((response) => response.json())
+      .then((json) => {
         console.log(json);
         setData(json.data.movies);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }, []);
@@ -58,15 +58,15 @@ const SubCatalogList = ({ title, url, onPress }: Props) => {
           keyExtractor={(item, index) => {
             return `catalogList-${(item as IMovie).id}-${index}`;
           }}
-          renderItem={({ item, index }) => (
+          renderItem={({item, index}) => (
             <CatalogImageContainer
               activeOpacity={1}
               onPress={() => {
                 onPress((item as IMovie).id);
               }}>
               <CatalogImage
-                source={{ uri: (item as IMovie).large_cover_image }}
-                style={{ width: 136, height: 201 }}
+                source={{uri: (item as IMovie).large_cover_image}}
+                style={{width: 136, height: 201}}
               />
             </CatalogImageContainer>
           )}

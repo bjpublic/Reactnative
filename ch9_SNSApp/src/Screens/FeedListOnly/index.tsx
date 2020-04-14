@@ -1,16 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { FlatList } from 'react-native';
-import { NavigationScreenProp, NavigationState } from 'react-navigation';
+import React, {useContext, useState, useEffect} from 'react';
+import {FlatList} from 'react-native';
 
-import { RandomUserDataContext } from '~/Context/RandomUserData';
+import {RandomUserDataContext} from '~/Context/RandomUserData';
 import Feed from '~/Components/Feed';
 
-interface Props {
-  navigation: NavigationScreenProp<NavigationState>;
-}
-
-const FeedListOnly = ({ navigation }: Props) => {
-  const { getMyFeed } = useContext(RandomUserDataContext);
+const FeedListOnly = () => {
+  const {getMyFeed} = useContext(RandomUserDataContext);
   const [feedList, setFeedList] = useState<Array<IFeed>>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -37,7 +32,7 @@ const FeedListOnly = ({ navigation }: Props) => {
       }}
       onEndReachedThreshold={0.5}
       refreshing={loading}
-      renderItem={({ item, index }) => (
+      renderItem={({item, index}) => (
         <Feed
           id={index}
           name={item.name}
@@ -48,11 +43,6 @@ const FeedListOnly = ({ navigation }: Props) => {
       )}
     />
   );
-};
-
-FeedListOnly.navigationOptions = {
-  title: '둘러보기',
-  headerTintColor: '#292929',
 };
 
 export default FeedListOnly;

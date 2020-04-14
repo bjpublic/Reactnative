@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Dimensions } from 'react-native';
+import {FlatList, Dimensions} from 'react-native';
 import Styled from 'styled-components/native';
 
 const Container = Styled.View`
@@ -17,7 +17,7 @@ interface Props {
   images: Array<string>;
 }
 
-const ScreenShotList = ({ images }: Props) => {
+const ScreenShotList = ({images}: Props) => {
   return (
     <Container>
       <Title>스크린샷</Title>
@@ -28,10 +28,10 @@ const ScreenShotList = ({ images }: Props) => {
         keyExtractor={(item, index) => {
           return `screenShotList-${index}`;
         }}
-        renderItem={({ item, index }) => (
+        renderItem={({item, index}) => (
           <ScreenShotImage
-            source={{ uri: item }}
-            style={{ width: Dimensions.get('window').width, height: 200 }}
+            source={{uri: item}}
+            style={{width: Dimensions.get('window').width, height: 200}}
           />
         )}
       />

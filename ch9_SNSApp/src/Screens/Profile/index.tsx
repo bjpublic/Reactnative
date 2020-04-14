@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, {useState, useContext, useLayoutEffect, useEffect} from 'react';
 import {
   NativeScrollEvent,
   Image,
@@ -7,10 +7,11 @@ import {
   ScrollView,
   ImageSourcePropType,
 } from 'react-native';
-import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import Styled from 'styled-components/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {DrawerActions} from '@react-navigation/native';
 
-import { RandomUserDataContext } from '~/Context/RandomUserData';
+import {RandomUserDataContext} from '~/Context/RandomUserData';
 
 import IconButton from '~/Components/IconButton';
 import Tab from '~/Components/Tab';
@@ -32,18 +33,30 @@ const ImageContainer = Styled.TouchableHighlight`
   padding: 1px;
 `;
 
+type NavigationProp = StackNavigationProp<ProfileTabParamList, 'Profile'>;
 interface Props {
-  navigation: NavigationScreenProp<NavigationState>;
+  navigation: NavigationProp;
 }
 
-const Profile = ({ navigation }: Props) => {
-  const { getMyFeed } = useContext(RandomUserDataContext);
+const Profile = ({navigation}: Props) => {
+  const {getMyFeed} = useContext(RandomUserDataContext);
   const [feedList, setFeedList] = useState<Array<IFeed>>([]);
   const imageWidth = Dimensions.get('window').width / 3;
   const tabs = [
     require('~/Assets/Images/ic_grid_image_focus.png'),
     require('~/Assets/Images/ic_tag_image.png'),
   ];
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <IconButton
+          iconName="menu"
+          onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+        />
+      ),
+    });
+  }, []);
 
   useEffect(() => {
     setFeedList(getMyFeed(24));
@@ -94,25 +107,14 @@ const Profile = ({ navigation }: Props) => {
               width: imageWidth,
             }}>
             <Image
-              source={{ uri: feed.images[0] }}
-              style={{ width: imageWidth, height: imageWidth }}
+              source={{uri: feed.images[0]}}
+              style={{width: imageWidth, height: imageWidth}}
             />
           </ImageContainer>
         ))}
       </FeedContainer>
     </ScrollView>
   );
-};
-
-interface INaviProps {
-  navigation: NavigationScreenProp<NavigationState>;
-}
-
-Profile.navigationOptions = ({ navigation }: INaviProps) => {
-  return {
-    title: 'Profile',
-    headerRight: <IconButton iconName="menu" onPress={navigation.openDrawer} />,
-  };
 };
 
 export default Profile;

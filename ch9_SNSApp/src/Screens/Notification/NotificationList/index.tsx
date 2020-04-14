@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import {FlatList} from 'react-native';
 
 import Styled from 'styled-components/native';
 
@@ -27,29 +27,29 @@ interface Props {
   onEndReached: () => void;
 }
 
-const NotificationList = ({ id, width, data, onEndReached }: Props) => {
+const NotificationList = ({id, width, data, onEndReached}: Props) => {
   return (
     <FlatList
       data={data}
-      style={{ width }}
+      style={{width}}
       keyExtractor={(item, index) => {
         return `notification-${id}-${index}`;
       }}
       showsVerticalScrollIndicator={false}
       onEndReached={onEndReached}
       onEndReachedThreshold={0.5}
-      renderItem={({ item, index }) => (
+      renderItem={({item, index}) => (
         <NotificationContainer>
           <ProfileImage
-            source={{ uri: item.photo }}
-            style={{ width: 50, height: 50 }}
+            source={{uri: item.photo}}
+            style={{width: 50, height: 50}}
           />
           <Message numberOfLines={2}>
             <LabelName>{item.name}</LabelName>님이 회원님 게시물을 좋아합니다.
           </Message>
           <PostImage
-            source={{ uri: item.images[0] }}
-            style={{ width: 50, height: 50 }}
+            source={{uri: item.images[0]}}
+            style={{width: 50, height: 50}}
           />
         </NotificationContainer>
       )}

@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Styled from 'styled-components/native';
-import AsyncStorage from '@react-native-community/async-storage';
-import { NavigationScreenProp, NavigationState } from 'react-navigation';
+import {
+  DrawerContentScrollView,
+  DrawerContentComponentProps,
+  DrawerContentOptions,
+} from '@react-navigation/drawer';
 
-const Container = Styled.SafeAreaView`
-  flex: 1;
-  background-color: #FEFFFF;
-`;
+import {UserContext} from '~/Context/User';
+
 const Header = Styled.View`
   border-bottom-width: 1px;
   border-color: #D3D3D3;
@@ -27,20 +28,20 @@ const Label = Styled.Text`
   font-size: 16px;
 `;
 const Footer = Styled.View`
-  position: absolute;
-  bottom: 32px;
   width: 100%;
   border-top-width: 1px;
   border-color: #D3D3D3;
 `;
 
 interface Props {
-  navigation: NavigationScreenProp<NavigationState>;
+  props: DrawerContentComponentProps<DrawerContentOptions>;
 }
 
-const Drawer = ({ navigation }: Props) => {
+const Drawer = ({props}: Props) => {
+  const {logout} = useContext<IUserContext>(UserContext);
+
   return (
-    <Container>
+    <DrawerContentScrollView {...props}>
       <Header>
         <Title>Sara Lambert</Title>
       </Header>
@@ -67,8 +68,7 @@ const Drawer = ({ navigation }: Props) => {
       <Footer>
         <Button
           onPress={() => {
-            AsyncStorage.removeItem('key');
-            navigation.navigate('CheckLogin');
+            logout();
           }}>
           <ButtonContainer>
             <Icon
@@ -78,7 +78,7 @@ const Drawer = ({ navigation }: Props) => {
           </ButtonContainer>
         </Button>
       </Footer>
-    </Container>
+    </DrawerContentScrollView>
   );
 };
 

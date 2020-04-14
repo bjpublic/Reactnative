@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import {FlatList} from 'react-native';
 import Styled from 'styled-components/native';
 
 const Container = Styled.View``;
@@ -27,7 +27,7 @@ interface Props {
   cast: Array<ICast>;
 }
 
-const CastList = ({ cast }: Props) => {
+const CastList = ({cast}: Props) => {
   return (
     <Container>
       <Title>배우</Title>
@@ -37,11 +37,11 @@ const CastList = ({ cast }: Props) => {
         keyExtractor={(item, index) => {
           return `castList-${index}`;
         }}
-        renderItem={({ item, index }) => (
+        renderItem={({item, index}) => (
           <CastContainer>
             <CastImage
-              source={{ uri: (item as ICast).url_small_image }}
-              style={{ width: 100, height: 150 }}
+              source={{uri: (item as ICast).url_small_image}}
+              style={{width: 100, height: 150}}
             />
             <LabelName>{(item as ICast).name}</LabelName>
           </CastContainer>

@@ -1,25 +1,16 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { NavigationScreenProp, NavigationState } from 'react-navigation';
+import React, {useContext, useState, useEffect} from 'react';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-import Styled from 'styled-components/native';
-
-import { RandomUserDataContext } from '~/Context/RandomUserData';
-import IconButton from '~/Components/IconButton';
-import Input from '~/Components/Input';
+import {RandomUserDataContext} from '~/Context/RandomUserData';
 import ImageFeedList from '~/Components/ImageFeedList';
 
-const SearchBar = Styled.View`
-  flex: 1;
-  flex-direction: row;
-  align-items: center;
-`;
-
+type NavigationProp = StackNavigationProp<FeedsTabParamList, 'Feeds'>;
 interface Props {
-  navigation: NavigationScreenProp<NavigationState>;
+  navigation: NavigationProp;
 }
 
-const Feeds = ({ navigation }: Props) => {
-  const { getMyFeed } = useContext(RandomUserDataContext);
+const Feeds = ({navigation}: Props) => {
+  const {getMyFeed} = useContext(RandomUserDataContext);
   const [feedList, setFeedList] = useState<Array<IFeed>>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -46,19 +37,6 @@ const Feeds = ({ navigation }: Props) => {
       }}
     />
   );
-};
-
-Feeds.navigationOptions = {
-  headerTitle: (
-    <SearchBar>
-      <Input
-        style={{ flex: 1, marginLeft: 8, height: 32 }}
-        placeholder="검색"
-      />
-      <IconButton iconName="camera" />
-    </SearchBar>
-  ),
-  headerBackTitle: null,
 };
 
 export default Feeds;

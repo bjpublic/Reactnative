@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
-import { NavigationScreenProp, NavigationState } from 'react-navigation';
+import React, {useContext, useLayoutEffect, useEffect} from 'react';
+import SplashScreen from 'react-native-splash-screen';
+import {StackNavigationProp} from '@react-navigation/stack';
 import Styled from 'styled-components/native';
+
+import {UserContext} from '~/Context/User';
 
 import BitCatalogList from './BigCatalogList';
 import SubCatalogList from './SubCatalogList';
@@ -17,20 +19,29 @@ const StyleButton = Styled.TouchableOpacity`
 const Icon = Styled.Image`
 `;
 
+type NavigationProp = StackNavigationProp<MovieNaviParamList, 'MovieHome'>;
 interface Props {
-  navigation: NavigationScreenProp<NavigationState>;
+  navigation: NavigationProp;
 }
 
-const MovieHome = ({ navigation }: Props) => {
-  const _logout = () => {
-    AsyncStorage.removeItem('key');
-    navigation.navigate('LoginNavigator');
-  };
+const MovieHome = ({navigation}: Props) => {
+  const {logout} = useContext<IUserContext>(UserContext);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <StyleButton
+          onPress={() => {
+            logout();
+          }}>
+          <Icon source={require('~/Assets/Images/ic_logout.png')} />
+        </StyleButton>
+      ),
+    });
+  }, []);
 
   useEffect(() => {
-    navigation.setParams({
-      logout: _logout,
-    });
+    SplashScreen.hide();
   }, []);
 
   return (
@@ -72,36 +83,6 @@ const MovieHome = ({ navigation }: Props) => {
       />
     </Container>
   );
-};
-
-interface INaviProps {
-  navigation: NavigationScreenProp<NavigationState>;
-}
-
-MovieHome.navigationOptions = ({ navigation }: INaviProps) => {
-  const logout = navigation.getParam('logout');
-  return {
-    title: 'MOVIEAPP',
-    headerTintColor: '#E70915',
-    headerStyle: {
-      backgroundColor: '#141414',
-      borderBottomWidth: 0,
-    },
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-    headerBackTitle: null,
-    headerRight: (
-      <StyleButton
-        onPress={() => {
-          if (logout && typeof logout === 'function') {
-            logout();
-          }
-        }}>
-        <Icon source={require('~/Assets/Images/ic_logout.png')} />
-      </StyleButton>
-    ),
-  };
 };
 
 export default MovieHome;
