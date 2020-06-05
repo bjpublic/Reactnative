@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { NavigationScreenProp, NavigationState } from 'react-navigation';
+import React, {useState} from 'react';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 import Styled from 'styled-components/native';
 
@@ -54,11 +54,12 @@ const GoBack = Styled.Text`
   text-align: center;
 `;
 
+type NavigationProp = StackNavigationProp<LoginNaviParamList, 'PasswordReset'>;
 interface Props {
-  navigation: NavigationScreenProp<NavigationState>;
+  navigation: NavigationProp;
 }
 
-const PasswordReset = ({ navigation }: Props) => {
+const PasswordReset = ({navigation}: Props) => {
   const [tabIndex, setTabIndex] = useState<number>(0);
   const tabs = ['사용자 이름', '전화번호'];
   const tabDescriptions = [
@@ -86,10 +87,10 @@ const PasswordReset = ({ navigation }: Props) => {
           ))}
         </TabContainer>
         <Input
-          style={{ marginBottom: 16 }}
+          style={{marginBottom: 16}}
           placeholder={placeholders[tabIndex]}
         />
-        <Button label="다음" style={{ marginBottom: 24 }} />
+        <Button label="다음" style={{marginBottom: 24}} />
         <HelpLabel>도움이 더 필요하세요?</HelpLabel>
       </FormContainer>
       <Footer>
@@ -97,10 +98,6 @@ const PasswordReset = ({ navigation }: Props) => {
       </Footer>
     </Container>
   );
-};
-
-PasswordReset.navigationOptions = {
-  header: null,
 };
 
 export default PasswordReset;

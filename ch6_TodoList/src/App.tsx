@@ -1,7 +1,7 @@
 import React from 'react';
 import Styled from 'styled-components/native';
 
-import { TodoListContextProvider } from '~/Context/TodoListContext';
+import {TodoListContextProvider} from '~/Context/TodoListContext';
 
 import Todo from './Screens/Todo';
 

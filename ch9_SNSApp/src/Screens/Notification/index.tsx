@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, createRef } from 'react';
+import React, {useContext, useState, useEffect, createRef} from 'react';
 import {
   Dimensions,
   NativeSyntheticEvent,
@@ -8,34 +8,31 @@ import {
 
 import Styled from 'styled-components/native';
 
-import { RandomUserDataContext } from '~/Context/RandomUserData';
+import {RandomUserDataContext} from '~/Context/RandomUserData';
 import Tab from '~/Components/Tab';
 import NotificationList from './NotificationList';
 
-const ProfileTabContainer = Styled.View`
+const ProfileTabContainer = Styled.SafeAreaView`
   flex-direction: row;
   background-color: #FEFFFF;
 `;
-const Label = Styled.Text`
-  color: #929292;
-  text-align: center;
-`;
 
-const TabContainer = Styled.SafeAreaView`
+const TabContainer = Styled.View`
   width: 100%;
   height: ${Dimensions.get('window').height}px;
 `;
 
 interface Props {}
 
-const Notification = ({  }: Props) => {
-  const { getMyFeed } = useContext(RandomUserDataContext);
+const Notification = ({}: Props) => {
+  const {getMyFeed} = useContext(RandomUserDataContext);
   const [followingList, setFollowingList] = useState<Array<IFeed>>([]);
   const [myNotifications, setMyNotifications] = useState<Array<IFeed>>([]);
   const [tabIndex, setTabIndex] = useState<number>(1);
   const width = Dimensions.get('window').width;
   const tabs = ['팔로잉', '내 소식'];
   const refScrollView = createRef<ScrollView>();
+
   useEffect(() => {
     setFollowingList(getMyFeed(24));
     setMyNotifications(getMyFeed(24));
@@ -53,7 +50,7 @@ const Notification = ({  }: Props) => {
               setTabIndex(index);
               const node = refScrollView.current;
               if (node) {
-                node.scrollTo({ x: width * index, y: 0, animated: true });
+                node.scrollTo({x: width * index, y: 0, animated: true});
               }
             }}
           />
@@ -69,7 +66,7 @@ const Notification = ({  }: Props) => {
           const index = event.nativeEvent.contentOffset.x / width;
           setTabIndex(index);
         }}
-        contentOffset={{ x: width, y: 0 }}>
+        contentOffset={{x: width, y: 0}}>
         <NotificationList
           id={0}
           width={width}

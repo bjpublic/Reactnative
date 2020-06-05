@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { FlatList } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {FlatList} from 'react-native';
 import Styled from 'styled-components/native';
 
 import BigCatalog from '~/Components/BigCatalog';
@@ -14,17 +14,17 @@ interface Props {
   onPress: (id: number) => void;
 }
 
-const BigCatalogList = ({ url, onPress }: Props) => {
+const BigCatalogList = ({url, onPress}: Props) => {
   const [data, setData] = useState<Array<IMovie>>([]);
 
   useEffect(() => {
     fetch(url)
-      .then(response => response.json())
-      .then(json => {
+      .then((response) => response.json())
+      .then((json) => {
         console.log(json);
         setData(json.data.movies);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }, []);
@@ -38,7 +38,7 @@ const BigCatalogList = ({ url, onPress }: Props) => {
         keyExtractor={(item, index) => {
           return `bigScreen-${index}`;
         }}
-        renderItem={({ item, index }) => (
+        renderItem={({item, index}) => (
           <BigCatalog
             id={(item as IMovie).id}
             image={(item as IMovie).large_cover_image}

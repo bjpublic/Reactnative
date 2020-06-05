@@ -1,14 +1,8 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { ActivityIndicator, Image } from 'react-native';
-import Styled from 'styled-components/native';
+import React, {createContext, useState, useEffect} from 'react';
+import {Image} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const Loading = Styled.View`
-  flex: 1;
-  background-color: #FEFFFF;
-  align-items: center;
-  justify-content: center;
-`;
+import Loading from '~/Components/Loading';
 
 interface Props {
   cache?: boolean;
@@ -25,7 +19,7 @@ const RandomUserDataContext = createContext<IRnadomUserData>({
   },
 });
 
-const RandomUserDataProvider = ({ cache, children }: Props) => {
+const RandomUserDataProvider = ({cache, children}: Props) => {
   const [userList, setUserList] = useState<Array<IUserProfile>>([]);
   const [descriptionList, setDescriptionList] = useState<Array<string>>([]);
   const [imageList, setImageList] = useState<Array<string>>([]);
@@ -56,7 +50,9 @@ const RandomUserDataProvider = ({ cache, children }: Props) => {
     }
 
     try {
-      const response = await fetch('https://uinames.com/api/?amount=25&ext');
+      const response = await fetch(
+        'https://raw.githubusercontent.com/dev-yakuza/users/master/api.json',
+      );
       const data = await response.json();
       setUserList(data);
       setCachedData('UserList', data);
@@ -75,7 +71,7 @@ const RandomUserDataProvider = ({ cache, children }: Props) => {
 
     try {
       const response = await fetch(
-        'https://opinionated-quotes-api.gigalixirapp.com/v1/quotes?rand=t&n=25'
+        'https://opinionated-quotes-api.gigalixirapp.com/v1/quotes?rand=t&n=25',
       );
       const data = await response.json();
 
@@ -157,7 +153,7 @@ const RandomUserDataProvider = ({ cache, children }: Props) => {
   };
 
   console.log(
-    `${userList.length} / ${descriptionList.length} / ${imageList.length}`
+    `${userList.length} / ${descriptionList.length} / ${imageList.length}`,
   );
   return (
     <RandomUserDataContext.Provider
@@ -169,12 +165,10 @@ const RandomUserDataProvider = ({ cache, children }: Props) => {
       imageList.length === 25 ? (
         children
       ) : (
-        <Loading>
-          <ActivityIndicator color="#D3D3D3" size="large" />
-        </Loading>
+        <Loading />
       )}
     </RandomUserDataContext.Provider>
   );
 };
 
-export { RandomUserDataProvider, RandomUserDataContext };
+export {RandomUserDataProvider, RandomUserDataContext};

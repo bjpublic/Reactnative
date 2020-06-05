@@ -1,4 +1,5 @@
 import React from 'react';
+import {Platform} from 'react-native';
 import Styled from 'styled-components/native';
 
 import Background from './Background';
@@ -17,9 +18,9 @@ interface Props {
   hideTodoInput: () => void;
 }
 
-const TodoInput = ({ hideTodoInput }: Props) => {
+const TodoInput = ({hideTodoInput}: Props) => {
   return (
-    <Container behavior="padding">
+    <Container behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <Background onPress={hideTodoInput} />
       <TextInput hideTodoInput={hideTodoInput} />
     </Container>

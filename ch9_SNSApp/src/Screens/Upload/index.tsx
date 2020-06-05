@@ -1,25 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { NavigationScreenProp, NavigationState } from 'react-navigation';
-
-import Styled from 'styled-components/native';
-
-import { RandomUserDataContext } from '~/Context/RandomUserData';
-import IconButton from '~/Components/IconButton';
-import Input from '~/Components/Input';
+import React, {useContext, useState, useEffect} from 'react';
+import {RandomUserDataContext} from '~/Context/RandomUserData';
 import ImageFeedList from '~/Components/ImageFeedList';
 
-const SearchBar = Styled.View`
-  flex: 1;
-  flex-direction: row;
-  align-items: center;
-`;
-
-interface Props {
-  navigation: NavigationScreenProp<NavigationState>;
-}
-
-const Upload = ({ navigation }: Props) => {
-  const { getMyFeed } = useContext(RandomUserDataContext);
+const Upload = () => {
+  const {getMyFeed} = useContext(RandomUserDataContext);
   const [feedList, setFeedList] = useState<Array<IFeed>>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -43,10 +27,6 @@ const Upload = ({ navigation }: Props) => {
       }}
     />
   );
-};
-
-Upload.navigationOptions = {
-  title: '사진 업로드',
 };
 
 export default Upload;

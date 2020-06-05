@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { StatusBar, SafeAreaView } from 'react-native';
+import React, {Fragment} from 'react';
+import {StatusBar, SafeAreaView} from 'react-native';
 
 import {
   Header,
@@ -37,7 +37,7 @@ const HighLight = Styled.Text`
 
 interface Props {}
 
-const App = ({  }: Props) => {
+const App = ({}: Props) => {
   return (
     <Fragment>
       <StatusBar barStyle="dark-content" />

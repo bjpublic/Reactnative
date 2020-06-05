@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
+import {Dimensions} from 'react-native';
 import Styled from 'styled-components/native';
 
 const Container = Styled.TouchableOpacity``;
@@ -51,7 +51,7 @@ interface Props {
   onPress?: (id: number) => void;
 }
 
-const BigCatalog = ({ id, image, year, title, genres, onPress }: Props) => {
+const BigCatalog = ({id, image, year, title, genres, onPress}: Props) => {
   return (
     <Container
       activeOpacity={1}
@@ -61,8 +61,8 @@ const BigCatalog = ({ id, image, year, title, genres, onPress }: Props) => {
         }
       }}>
       <CatalogImage
-        source={{ uri: image }}
-        style={{ width: Dimensions.get('window').width, height: 300 }}
+        source={{uri: image}}
+        style={{width: Dimensions.get('window').width, height: 300}}
       />
       <InfoContainer>
         <LabelYear>{year}년 개봉</LabelYear>

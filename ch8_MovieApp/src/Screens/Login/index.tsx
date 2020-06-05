@@ -1,8 +1,10 @@
-import React from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
-import { NavigationScreenProp, NavigationState } from 'react-navigation';
-import { Linking } from 'react-native';
+import React, {useContext, useEffect} from 'react';
 import Styled from 'styled-components/native';
+import {Linking} from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
+import {StackNavigationProp} from '@react-navigation/stack';
+
+import {UserContext} from '~/Context/User';
 
 import Input from '~/Components/Input';
 import Button from '~/Components/Button';
@@ -25,27 +27,32 @@ const PasswordReset = Styled.Text`
   text-align: center;
 `;
 
+type NavigationProp = StackNavigationProp<LoginNaviParamList, 'Login'>;
 interface Props {
-  navigation: NavigationScreenProp<NavigationState>;
+  navigation: NavigationProp;
 }
 
-const Login = ({ navigation }: Props) => {
+const Login = ({navigation}: Props) => {
+  const {login} = useContext<IUserContext>(UserContext);
+
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
   return (
     <Container>
       <FormContainer>
-        <Input style={{ marginBottom: 16 }} placeholder="이메일" />
+        <Input style={{marginBottom: 16}} placeholder="이메일" />
         <Input
-          style={{ marginBottom: 16 }}
+          style={{marginBottom: 16}}
           placeholder="비밀번호"
           secureTextEntry={true}
         />
         <Button
-          style={{ marginBottom: 24 }}
+          style={{marginBottom: 24}}
           label="로그인"
           onPress={() => {
-            console.log('test');
-            AsyncStorage.setItem('key', 'JWT_KEY');
-            navigation.navigate('MovieNavigator');
+            login('dev.yakuza@gmail.com', 'password');
           }}
         />
         <PasswordReset
@@ -57,15 +64,6 @@ const Login = ({ navigation }: Props) => {
       </FormContainer>
     </Container>
   );
-};
-
-Login.navigationOptions = {
-  title: 'MOVIEAPP',
-  headerTransparent: true,
-  headerTintColor: '#E70915',
-  headerTitleStyle: {
-    fontWeight: 'bold',
-  },
 };
 
 export default Login;

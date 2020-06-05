@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { ActivityIndicator } from 'react-native';
+import React, {useState, useEffect} from 'react';
 import Styled from 'styled-components/native';
-import { NavigationScreenProp, NavigationState } from 'react-navigation';
+import {RouteProp} from '@react-navigation/native';
 
+import Loading from '~/Screens/Loading';
 import BigCatalog from '~/Components/BigCatalog';
 import CastList from './CastList';
 import ScreenShotList from './ScreenShotList';
@@ -11,13 +11,6 @@ const Container = Styled.ScrollView`
   flex: 1;
   background-color: #141414;
 `;
-const LoadingContainer = Styled.View`
-  flex: 1;
-  background-color: #141414;
-  align-items: center;
-  justify-content: center;
-`;
-
 const ContainerTitle = Styled.Text`
   font-size: 16px;
   color: #FFFFFF;
@@ -39,24 +32,25 @@ const LabelInfo = Styled.Text`
   color: #FFFFFF;
 `;
 
+type ProfileScreenRouteProp = RouteProp<MovieNaviParamList, 'MovieDetail'>;
 interface Props {
-  navigation: NavigationScreenProp<NavigationState>;
+  route: ProfileScreenRouteProp;
 }
 
-const MovieDetail = ({ navigation }: Props) => {
+const MovieDetail = ({route}: Props) => {
   const [data, setData] = useState<IMovieDetail>();
 
   useEffect(() => {
-    const id = navigation.getParam('id');
+    const {id} = route.params;
     fetch(
-      `https://yts.lt/api/v2/movie_details.json?movie_id=${id}&with_images=true&with_cast=true`
+      `https://yts.lt/api/v2/movie_details.json?movie_id=${id}&with_images=true&with_cast=true`,
     )
-      .then(response => response.json())
-      .then(json => {
+      .then((response) => response.json())
+      .then((json) => {
         console.log(json);
         setData(json.data.movie);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }, []);
@@ -92,21 +86,8 @@ const MovieDetail = ({ navigation }: Props) => {
       />
     </Container>
   ) : (
-    <LoadingContainer>
-      <ActivityIndicator size="large" color="#E70915" />
-    </LoadingContainer>
+    <Loading />
   );
 };
 
-MovieDetail.navigationOptions = {
-  title: 'MOVIEAPP',
-  headerTintColor: '#E70915',
-  headerStyle: {
-    backgroundColor: '#141414',
-    borderBottomWidth: 0,
-  },
-  headerTitleStyle: {
-    fontWeight: 'bold',
-  },
-};
 export default MovieDetail;
