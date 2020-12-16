@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import Styled from 'styled-components/native';
 
-import BitCatalogList from './BigCatalogList';
+import BigCatalogList from './BigCatalogList';
 import SubCatalogList from './SubCatalogList';
 
 const Container = Styled.ScrollView`
@@ -35,7 +35,7 @@ const MovieHome = ({ navigation }: Props) => {
 
   return (
     <Container>
-      <BitCatalogList
+      <BigCatalogList
         url="https://yts.lt/api/v2/list_movies.json?sort_by=like_count&order_by=desc&limit=5"
         onPress={(id: number) => {
           navigation.navigate('MovieDetail', {
