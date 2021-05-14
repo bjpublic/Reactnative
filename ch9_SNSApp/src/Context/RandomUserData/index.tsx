@@ -71,17 +71,12 @@ const RandomUserDataProvider = ({cache, children}: Props) => {
 
     try {
       const response = await fetch(
-        'https://opinionated-quotes-api.gigalixirapp.com/v1/quotes?rand=t&n=25',
+        'https://raw.githubusercontent.com/dev-yakuza/users/master/lorem.json',
       );
       const data = await response.json();
 
-      let text = [];
-      for (const index in data.quotes) {
-        text.push(data.quotes[index].quote);
-      }
-
-      setDescriptionList(text);
-      setCachedData('DescriptionList', text);
+      setDescriptionList(data);
+      setCachedData('DescriptionList', data);
     } catch (error) {
       console.log(error);
     }
