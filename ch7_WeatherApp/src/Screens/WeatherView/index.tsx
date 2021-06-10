@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, Alert } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {FlatList, Alert} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 
 import Styled from 'styled-components/native';
@@ -46,7 +46,7 @@ interface IWeather {
   weather?: string;
   isLoading: boolean;
 }
-const WeatherView = ({  }: Props) => {
+const WeatherView = ({}: Props) => {
   const [weatherInfo, setWeatherInfo] = useState<IWeather>({
     temperature: undefined,
     weather: undefined,
@@ -58,32 +58,32 @@ const WeatherView = ({  }: Props) => {
       isLoading: false,
     });
     Geolocation.getCurrentPosition(
-      position => {
-        const { latitude, longitude } = position.coords;
+      (position) => {
+        const {latitude, longitude} = position.coords;
         fetch(
-          `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=${API_KEY}&units=metric`
+          `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`,
         )
-          .then(response => response.json())
-          .then(json => {
+          .then((response) => response.json())
+          .then((json) => {
             setWeatherInfo({
               temperature: json.main.temp,
               weather: json.weather[0].main,
               isLoading: true,
             });
           })
-          .catch(error => {
+          .catch((error) => {
             setWeatherInfo({
               isLoading: true,
             });
             showError('날씨 정보를 가져오는데 실패하였습니다.');
           });
       },
-      error => {
+      (error) => {
         setWeatherInfo({
           isLoading: true,
         });
         showError('위치 정보를 가져오는데 실패하였습니다.');
-      }
+      },
     );
   };
 
@@ -98,7 +98,7 @@ const WeatherView = ({  }: Props) => {
   }, []);
 
   let data = [];
-  const { isLoading, weather, temperature } = weatherInfo;
+  const {isLoading, weather, temperature} = weatherInfo;
   if (weather && temperature) {
     data.push(weatherInfo);
   }
@@ -118,13 +118,13 @@ const WeatherView = ({  }: Props) => {
             <LoadingLabel>Loading...</LoadingLabel>
           </LoadingView>
         }
-        renderItem={({ item, index }) => (
+        renderItem={({item, index}) => (
           <WeatherItemContainer>
             <Weather>{(item as IWeather).weather}</Weather>
             <Temperature>({(item as IWeather).temperature}°C)</Temperature>
           </WeatherItemContainer>
         )}
-        contentContainerStyle={{ flex: 1 }}
+        contentContainerStyle={{flex: 1}}
       />
     </Container>
   );
